@@ -43,58 +43,55 @@ class _PictureListPageState extends State<PictureListPage>
           searchController.text = state.date!;
         }
       }, builder: (_, state) {
-        if (state is PicturesLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (state is! PicturesLoading && state is! PicturesError) {
-          return Stack(
-            children: [
-              if (state.pictures != null)
-                ListView.builder(
-                  padding: const EdgeInsets.only(top: 70),
-                  cacheExtent: 9999,
-                  itemBuilder: (context, index) {
-                    return PictureItem(picture: state.pictures![index]);
-                  },
-                  itemCount: state.pictures!.length,
+        return Stack(
+          children: [
+            if (state is PicturesLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+            if (state is PicturesError)
+              const Center(child: Icon(Icons.refresh)),
+            if (state.pictures != null)
+              ListView.builder(
+                padding: const EdgeInsets.only(top: 70),
+                cacheExtent: 9999,
+                itemBuilder: (context, index) {
+                  return PictureItem(picture: state.pictures![index]);
+                },
+                itemCount: state.pictures!.length,
+              ),
+            SearchAnchor(
+              builder: (context, controller) => SearchBar(
+                controller: searchController,
+                leading: const Icon(Icons.search),
+                onChanged: (value) =>
+                    BlocProvider.of<PicturesBloc>(context).add(
+                  ChangeSearch(value),
                 ),
-              SearchAnchor(
-                builder: (context, controller) => SearchBar(
-                  controller: searchController,
-                  leading: const Icon(Icons.search),
-                  onChanged: (value) =>
-                      BlocProvider.of<PicturesBloc>(context).add(
-                    ChangeSearch(value),
-                  ),
-                  trailing: [
-                    IconButton(
-                      icon: const Icon(Icons.calendar_month),
-                      onPressed: () => showDatePicker(
-                              context: context,
-                              firstDate: DateTime.now().subtract(
-                                const Duration(days: 600),
-                              ),
-                              lastDate: DateTime.now())
-                          .then(
-                        (value) => BlocProvider.of<PicturesBloc>(context).add(
-                          ChangeSearch(
-                            DateFormat(dateFormat)
-                                .format(value ?? DateTime.now()),
-                          ),
+                trailing: [
+                  IconButton(
+                    icon: const Icon(Icons.calendar_month),
+                    onPressed: () => showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now().subtract(
+                              const Duration(days: 600),
+                            ),
+                            lastDate: DateTime.now())
+                        .then(
+                      (value) => BlocProvider.of<PicturesBloc>(context).add(
+                        ChangeSearch(
+                          DateFormat(dateFormat)
+                              .format(value ?? DateTime.now()),
                         ),
                       ),
-                    )
-                  ],
-                ),
-                suggestionsBuilder: (context, controller) => List.empty(),
+                    ),
+                  )
+                ],
               ),
-            ],
-          );
-        }
-        if (state is PicturesError) {
-          // print(state.error!.response!);
-          return const Center(child: Icon(Icons.refresh));
-        }
+              suggestionsBuilder: (context, controller) => List.empty(),
+            ),
+          ],
+        );
 
         return const SizedBox();
       }),
