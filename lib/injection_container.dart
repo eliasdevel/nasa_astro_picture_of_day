@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:disposable_cached_images/disposable_cached_images.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nasa_astro_picture_of_day/features/picture_list/data/data_sources/local/app_database.dart';
 import 'package:nasa_astro_picture_of_day/features/picture_list/data/data_sources/remote/picture_nasa_api_service.dart';

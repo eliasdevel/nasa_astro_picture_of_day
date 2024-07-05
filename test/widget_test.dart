@@ -1,6 +1,6 @@
-// ignore: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:nasa_astro_picture_of_day/features/picture_list/data/models/picture.dart';
-import 'package:nasa_astro_picture_of_day/features/picture_list/domain/entities/picture.dart';
 import 'package:nasa_astro_picture_of_day/features/picture_list/presentation/bloc/picture/picture_event.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:nasa_astro_picture_of_day/features/picture_list/presentation/bloc/picture/picture_bloc.dart';
