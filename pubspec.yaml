@@ -30,19 +30,14 @@ dependencies:
   #database
   floor:
 
-  #hooks
-  flutter_hooks:
-
   #images
   disposable_cached_images:
   
   #video
   video_player:
   youtube_player_flutter:
-  
-  json_annotation:
 
-  
+  json_annotation:
 
   #network_request
   dio:

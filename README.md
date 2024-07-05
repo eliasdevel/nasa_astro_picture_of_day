@@ -1,16 +1,14 @@
 # nasa_astro_picture_of_day
 
-A new Flutter project.
+A Flutter project To Show Pictures of day using de Nasa Api.
 
-## Getting Started
+## Tools Used
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Clean Architecture
+- Bloc
+- Retrofit for API management
+- Floor to create a Sqlite Database ang manage the base
+- Get_it to inject dependencies
+- disposable_cached_images to cache images
+- youtube_player_flutter to play videos when the url is a video
+- dio to http requests
