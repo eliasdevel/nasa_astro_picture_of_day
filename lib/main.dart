@@ -5,6 +5,9 @@ import 'package:nasa_astro_picture_of_day/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await DisposableImages.init();
+
   await initializeDependencies();
 
   runApp(const DisposableImages(App()));

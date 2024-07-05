@@ -18,6 +18,8 @@ class PicturesBloc extends Bloc<PicturesEvent, PictureState> {
     );
     //When search changes
     on<ChangeSearch>((event, emit) async {
+      emit(const PicturesLoading());
+
       if (event.search.isEmpty) {
         await _loadAllData(event, emit);
         return;
@@ -30,14 +32,12 @@ class PicturesBloc extends Bloc<PicturesEvent, PictureState> {
             params: SearchParamsEntity(
                 date: DateTime.parse("${event.search} 00:00:00"), name: null));
 
-        emit(PicturesSearchingByDate(response.data!, event.search));
+        emit(PicturesSearchedByDate(response.data!, event.search));
       } else {
         //Name Search
         final response = await _searchPicturesUsecase(
             params: SearchParamsEntity(date: null, name: "%${event.search}%"));
-
-        print("Elias ${response.data?.first.url}");
-        emit(PicturesSearchingByName(response.data!));
+        emit(PicturesSearchedByName(response.data!));
       }
     });
   }

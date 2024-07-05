@@ -24,11 +24,6 @@ class PictureRepositoryImpl implements PictureRepository {
         final result = await getPictureByDate(
             DateFormat(dateFormat).format(search!.date!));
 
-        if (result is DataFailed) {
-          print("Elias ${result.error!.response}");
-          print(result.error!.message);
-        }
-
         picsByDate.add(result.data!);
 
         return DataSuccess(picsByDate);

@@ -16,7 +16,6 @@ import 'package:nasa_astro_picture_of_day/features/picture_list/presentation/blo
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  await DisposableImages.init();
   final database =
       await $FloorAppDatabase.databaseBuilder('app_pictures.db').build();
   //Database

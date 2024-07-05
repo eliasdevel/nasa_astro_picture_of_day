@@ -1,30 +1,62 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:nasa_astro_picture_of_day/main.dart';
+// ignore: depend_on_referenced_packages
+import 'package:nasa_astro_picture_of_day/features/picture_list/data/models/picture.dart';
+import 'package:nasa_astro_picture_of_day/features/picture_list/domain/entities/picture.dart';
+import 'package:nasa_astro_picture_of_day/features/picture_list/presentation/bloc/picture/picture_event.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:nasa_astro_picture_of_day/features/picture_list/presentation/bloc/picture/picture_bloc.dart';
+import 'package:nasa_astro_picture_of_day/features/picture_list/presentation/bloc/picture/picture_state.dart';
+import 'package:nasa_astro_picture_of_day/injection_container.dart';
+import 'package:test/test.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'mock_path.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('PicturesBloc', () {
+    late PicturesBloc picturesBloc;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    setUpAll(() async {
+      PathProviderPlatform.instance = FakePathProviderPlatform();
+      await initializeDependencies();
+      picturesBloc = PicturesBloc(sl(), sl());
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('initial state is Loading', () {
+      expect(picturesBloc.state, equals(const PicturesLoading()));
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    blocTest(
+      'Get Pictures',
+      build: () => picturesBloc,
+      act: (bloc) => bloc.add(const GetPictures()),
+    );
+
+    blocTest(
+      'Change Search',
+      build: () => PicturesBloc(sl(), sl()),
+      act: (bloc) => bloc.add(const ChangeSearch('Picture')),
+      expect: () => [const PicturesLoading()],
+    );
+
+    blocTest('Change Search Date',
+        build: () => PicturesBloc(sl(), sl()),
+        act: (bloc) => bloc.add(const ChangeSearch('2024-07-05')),
+        wait: const Duration(seconds: 2),
+        expect: () => [
+              const PicturesLoading(),
+              const PicturesSearchedByDate([
+                PictureModel(
+                    copyright: 'Gianni Tumino',
+                    date: '2024-07-05',
+                    explanation:
+                        "A glow from the summit of Mount Etna, famous active stratovolcano of planet Earth, stands out along the horizon in this mountain and night skyscape. Bands of diffuse light from congeries of innumerable stars along the Milky Way galaxy stretch across the sky above. In silhouette, the Milky Way's massive dust clouds are clumped along the galactic plane. But also familiar to northern skygazers are bright stars Deneb, Vega, and Altair, the Summer Triangle straddling dark nebulae and luminous star clouds poised over the volcanic peak. The deep combined exposures also reveal the light of active star forming regions along the Milky Way, echoing Etna's ruddy hue in the northern hemisphere summer's night.",
+                    hdurl:
+                        'https://apod.nasa.gov/apod/image/2407/GianniTumino_Etna&MW_14mm_JPG_LOGO__2048pix.jpg',
+                    mediaType: 'image',
+                    serviceVersion: 'v1',
+                    title: 'Mount Etna Milky Way',
+                    url:
+                        'https://apod.nasa.gov/apod/image/2407/GianniTumino_Etna&MW_14mm_JPG_LOGO__1024pix.jpg')
+              ], '2024-07-05')
+            ]);
   });
 }

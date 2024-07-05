@@ -54,6 +54,7 @@ dev_dependencies:
   floor_generator:
   build_runner:
   json_serializable:
+  bloc_test:
 
 
 # For information on the generic Dart part of this file, see the

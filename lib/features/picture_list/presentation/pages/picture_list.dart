@@ -39,7 +39,7 @@ class _PictureListPageState extends State<PictureListPage>
       ),
       body:
           BlocConsumer<PicturesBloc, PictureState>(listener: (context, state) {
-        if (state is PicturesSearchingByDate) {
+        if (state is PicturesSearchedByDate) {
           searchController.text = state.date!;
         }
       }, builder: (_, state) {

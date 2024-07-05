@@ -9,7 +9,7 @@ abstract class PictureState extends Equatable {
   const PictureState({this.error, this.pictures, this.date});
 
   @override
-  List<Object?> get props => [pictures!, error];
+  List<Object?> get props => [pictures ?? [], error];
 }
 
 class PicturesLoading extends PictureState {
@@ -24,12 +24,12 @@ class PicturesError extends PictureState {
   const PicturesError(DioException error) : super(error: error);
 }
 
-class PicturesSearchingByName extends PictureState {
-  const PicturesSearchingByName(List<PictureEntity> pictures)
+class PicturesSearchedByName extends PictureState {
+  const PicturesSearchedByName(List<PictureEntity> pictures)
       : super(pictures: pictures);
 }
 
-class PicturesSearchingByDate extends PictureState {
-  const PicturesSearchingByDate(List<PictureEntity> pictures, String date)
+class PicturesSearchedByDate extends PictureState {
+  const PicturesSearchedByDate(List<PictureEntity> pictures, String date)
       : super(pictures: pictures, date: date);
 }

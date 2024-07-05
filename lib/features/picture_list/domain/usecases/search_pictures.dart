@@ -11,7 +11,6 @@ class SearchPicturesUsecase
   SearchPicturesUsecase(this._pictureRepository);
   @override
   Future<DataState<List<PictureEntity>>> call({SearchParamsEntity? params}) {
-    print("Elias ${params?.date} ${params?.name}");
     return _pictureRepository.getPictures(search: params);
   }
 }
