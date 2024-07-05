@@ -1,6 +1,6 @@
 # nasa_astro_picture_of_day
 
-A Flutter project To Show Pictures of day using de Nasa Api.
+A Flutter project To Show Pictures of day using the Nasa Api.
 
 ## Tools Used
 
