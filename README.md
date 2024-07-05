@@ -12,3 +12,4 @@ A Flutter project To Show Pictures of day using the Nasa Api.
 - disposable_cached_images to cache images
 - youtube_player_flutter to play videos when the url is a video
 - dio to http requests
+- Flutter test an Bloc test to test the app
